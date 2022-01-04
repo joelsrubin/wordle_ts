@@ -1,5 +1,21 @@
+:root {
+  --green: #6aaa64;
+  --darkendGreen: #538d4e;
+  --yellow: #c9b458;
+  --darkendYellow: #b59f3b;
+  --lightGray: #d8d8d8;
+  --gray: #86888a;
+  --darkGray: #939598;
+  --white: #fff;
+  --black: #212121;
+  --orange: #f5793a;
+  --blue: #85c0f9;
+  --color-tone-1: #d7dadc;
+}
+
 .App {
   text-align: center;
+  background-color: #282c34;
 }
 
 .App-logo {
@@ -39,4 +55,127 @@
 
 button {
   font-size: calc(10px + 2vmin);
+}
+
+.gameboard__wrapper {
+  max-width: 500px;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-rows: repeat(1, 1fr);
+  grid-gap: 10px;
+  border: 2px solid var(--darkGray);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.final__gameboard {
+  display: grid;
+  grid-template-rows: repeat(1, 1fr);
+  grid-gap: 10px;
+  border: 2px solid var(--darkGray);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.final__gameboard__wrapper {
+  transform: translateY(100%);
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+.final__gameboard__wrapper__show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.game-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 10px;
+}
+
+.item {
+  background-color: var(--darkGray);
+  border-radius: 5px;
+}
+
+.item input {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  background: inherit;
+  outline: none;
+  border: none;
+  color: var(--black);
+  text-align: center;
+  font-family: inherit;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 20px;
+}
+
+.item input.green {
+  background-color: var(--darkendGreen);
+  color: var(--color-tone-1);
+}
+
+.item input.yellow {
+  background: var(--darkendYellow);
+  color: var(--color-tone-1);
+}
+
+.item input.grey {
+  background-color: rgb(75, 85, 85);
+  color: var(--color-tone-1);
+}
+
+.keypad__wrapper {
+  width: 30vw;
+  height: 30vh;
+}
+
+.keypad {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.row {
+  padding: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.key {
+  min-width: 50px;
+  margin: 0 5px;
+  text-transform: uppercase;
+  height: 70px;
+}
+
+.long-key {
+  margin: 0 5px;
+  min-width: 60px;
+}
+
+button {
+  border-radius: 5px;
+  background: var(--gray);
+  color: var(--color-tone-1);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: row;
+}
+
+button.over {
+  height: 40px;
+  align-self: center;
+  margin: 0 20px;
 }
