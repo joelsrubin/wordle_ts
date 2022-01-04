@@ -58,7 +58,7 @@ button {
 }
 
 .gameboard__wrapper {
-  max-width: 500px;
+  /* max-width: 500px; */
 }
 
 .gameboard {
@@ -102,8 +102,6 @@ button {
 }
 
 .item input {
-  width: 50px;
-  height: 50px;
   border-radius: 5px;
   background: inherit;
   outline: none;
@@ -132,8 +130,8 @@ button {
 }
 
 .keypad__wrapper {
-  width: 30vw;
-  height: 30vh;
+  /* width: 20vw;
+  height: 30vh; */
 }
 
 .keypad {
@@ -178,4 +176,21 @@ button.over {
   height: 40px;
   align-self: center;
   margin: 0 20px;
+}
+
+@media (max-width: 600px) {
+  .App-header {
+    /* max-width: 80vw; */
+  }
+  .key {
+    min-width: 25px;
+    margin: 0 5px;
+    text-transform: uppercase;
+    height: 40px;
+  }
+
+  .long-key {
+    margin: 0 1px;
+    min-width: 30px;
+  }
 }
