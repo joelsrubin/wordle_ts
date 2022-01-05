@@ -1,5 +1,12 @@
 type GameBoardState = {
-  [key: string]: string[] | boolean;
+  row0: [];
+  row1: [];
+  row2: [];
+  row3: [];
+  row4: [];
+  row5: [];
+  won: boolean;
+  word: string;
 };
 
 type KeyPadProps = {

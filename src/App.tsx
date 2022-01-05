@@ -5,9 +5,12 @@ import FinalGraph from './FinalGraph';
 import GameBoard from './GameBoard';
 import KeyPad from './KeyPad';
 import { words } from './words';
-const idx = Math.floor(Math.random() * words.length);
-const word = words[idx];
-console.log(word);
+
+function returnWord() {
+  const idx = Math.floor(Math.random() * words.length);
+  const word = words[idx];
+  return word;
+}
 const initialState: GameBoardState = {
   row0: [],
   row1: [],
@@ -16,49 +19,58 @@ const initialState: GameBoardState = {
   row4: [],
   row5: [],
   won: false,
+  word: returnWord(),
 };
 
-const reducer = (state: GameBoardState, action: Action) => {
+// @ts-ignore
+const reducer = (state: GameBoardState, action: any) => {
   switch (action.type) {
     case 'row0':
       return {
         ...state,
         row0: action.payload,
+        // @ts-ignore
         won: action.payload.every((word) => word === 'green'),
       };
     case 'row1':
       return {
         ...state,
         row1: action.payload,
+        // @ts-ignore
         won: action.payload.every((word) => word === 'green'),
       };
     case 'row2':
       return {
         ...state,
         row2: action.payload,
+        // @ts-ignore
         won: action.payload.every((word) => word === 'green'),
       };
     case 'row3':
       return {
         ...state,
         row3: action.payload,
+        // @ts-ignore
         won: action.payload.every((word) => word === 'green'),
       };
     case 'row4':
       return {
         ...state,
         row4: action.payload,
+        // @ts-ignore
         won: action.payload.every((word) => word === 'green'),
       };
     case 'row5':
       return {
         ...state,
         row5: action.payload,
+        // @ts-ignore
         won: action.payload.every((word) => word === 'green'),
       };
     case 'reset':
       return {
         ...initialState,
+        word: returnWord(),
       };
     default:
       return {
@@ -149,7 +161,7 @@ function App() {
   const submitHandler = () => {
     const result: ReturnType<ValidateKey>[] = [];
     row.forEach((letter, index) => {
-      const style = validateKey(word, letter, index);
+      const style = validateKey(state.word, letter, index);
       const input = getInput(index);
       // const inputFinal = getInput(index, '.final__gameboard');
       const button = document.querySelector(`#${letter}`);
@@ -178,7 +190,7 @@ function App() {
   }, [rowLevel]);
 
   const textRender = () => {
-    const { won } = state;
+    const { won, word } = state;
     if (error) {
       return error;
     }
