@@ -195,7 +195,7 @@ function App() {
   const resetHandler = () => {
     const { row0 } = state;
     //dispatch a reset
-    if (!row0.length) {
+    if (!row0.length && !lose) {
       return;
     }
     dispatch({ type: 'reset', payload: ['green'] });
