@@ -92,6 +92,7 @@ function App() {
     setRow([...row, key]);
     if (input) {
       input.innerHTML = key;
+      input.classList.add('text');
     }
   };
 
@@ -109,6 +110,7 @@ function App() {
     const input = getInput(idx - 1);
     if (input) {
       input.innerHTML = '';
+      input.classList.remove('text');
     }
     const temp = row.slice(0, idx - 1);
     setRow(temp);

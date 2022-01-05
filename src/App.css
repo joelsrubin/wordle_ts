@@ -82,43 +82,62 @@ button {
   grid-gap: 10px;
 }
 
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 .item {
   background-color: var(--darkGray);
   border-radius: 5px;
-
   outline: none;
   border: none;
   min-height: 3rem;
   min-width: 3rem;
-  color: var(--color-tone-1);
+  color: var(--black);
   text-align: center;
   font-family: inherit;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 20px;
-
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: all 0.5s;
   /* transform: rotateY(180deg); */
+}
+
+.item.text {
+  animation: 0.2s bounce;
+  border: 1px solid rgba(255, 255, 255, 0.488);
 }
 
 .item.green {
   background-color: var(--darkendGreen);
   color: var(--color-tone-1);
-  border: none;
+  /* animation: 0.1s bounce; */
 }
 
 .item.yellow {
   background: var(--darkendYellow);
   color: var(--color-tone-1);
-  border: none;
+  /* animation: 0.1s bounce; */
 }
 
 .item.grey {
   background-color: rgb(75, 85, 85);
   color: var(--color-tone-1);
-  border: none;
+  /* animation: 0.1s bounce; */
 }
 
 .keypad {
