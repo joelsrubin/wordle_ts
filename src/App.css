@@ -101,8 +101,8 @@ button {
   border-radius: 5px;
   outline: none;
   border: none;
-  min-height: 3rem;
-  min-width: 3rem;
+  min-height: 4rem;
+  min-width: 4rem;
   color: var(--black);
   text-align: center;
   font-family: inherit;
@@ -112,8 +112,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-
   transition: all 0.5s;
+  border: 1px solid rgba(255, 255, 255, 0);
   /* transform: rotateY(180deg); */
 }
 
