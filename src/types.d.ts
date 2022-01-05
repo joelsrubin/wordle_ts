@@ -7,6 +7,7 @@ type KeyPadProps = {
   submitHandler: (rowLevel: number) => void;
   rowLevel: number;
   deleteHandler: (idx: number) => void;
+
   row: string[];
 };
 
@@ -25,4 +26,9 @@ type ValidateKey = (
 type Action = {
   type: string;
   payload: ReturnType<ValidateKey>[];
+};
+
+type RowState = {
+  row: string[];
+  rowLevel: number;
 };

@@ -56,6 +56,10 @@ const reducer = (state: GameBoardState, action: Action) => {
         row5: action.payload,
         won: action.payload.every((word) => word === 'green'),
       };
+    case 'reset':
+      return {
+        ...initialState,
+      };
     default:
       return {
         ...state,
@@ -63,18 +67,22 @@ const reducer = (state: GameBoardState, action: Action) => {
   }
 };
 
+const initialRowState: RowState = {
+  row: [],
+  rowLevel: 0,
+};
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [row, setRow] = useState<Array<string>>([]);
+  const [rowInfo, setRowInfo] = useState<RowState>(initialRowState);
   const [error, setError] = useState('');
-  const [rowLevel, setRowLevel] = useState(0);
   const [lose, setLose] = useState(false);
+  const { rowLevel, row } = rowInfo;
 
   const getInput = (idx: number, grid: string = '.gameboard') => {
     const board = document.querySelector(grid);
     const row = board?.querySelector(`.game-row${rowLevel}`);
     const cell = row?.querySelector(`.item${idx}`);
-
     return cell;
   };
 
@@ -89,7 +97,7 @@ function App() {
     const input = getInput(index);
 
     setError('');
-    setRow([...row, key]);
+    setRowInfo({ ...rowInfo, row: [...row, key] });
     if (input) {
       input.innerHTML = key;
       input.classList.add('text');
@@ -113,7 +121,29 @@ function App() {
       input.classList.remove('text');
     }
     const temp = row.slice(0, idx - 1);
-    setRow(temp);
+    setRowInfo({ ...rowInfo, row: temp });
+  };
+
+  // complete reset //
+
+  const resetHandler = () => {
+    //dispatch a reset
+    dispatch({ type: 'reset', payload: ['green'] });
+    setRowInfo(initialRowState);
+    const tiles = document.querySelectorAll('.item');
+    const keys = document.querySelector('.keypad')?.querySelectorAll('button');
+    keys?.forEach((key) => {
+      key.classList.remove('grey');
+    });
+    tiles.forEach((node) => {
+      node.innerHTML = '';
+      node.classList.remove('text');
+      node.classList.remove('grey');
+      node.classList.remove('yellow');
+      node.classList.remove('green');
+    });
+    setError('');
+    setLose(false);
   };
 
   const submitHandler = () => {
@@ -135,8 +165,7 @@ function App() {
     });
     if (row.length === 5) {
       dispatch({ type: `row${rowLevel}`, payload: result });
-      setRowLevel(rowLevel + 1);
-      setRow([]);
+      setRowInfo({ row: [], rowLevel: rowLevel + 1 });
     } else {
       setError('complete the row!');
     }
@@ -191,7 +220,7 @@ function App() {
           <button
             className='over'
             onClick={() => {
-              window.location.reload();
+              resetHandler();
             }}
           >
             start over
