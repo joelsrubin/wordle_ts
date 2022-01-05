@@ -119,7 +119,7 @@ button {
 }
 
 .game-row.incorrect {
-  animation: 0.8s shake;
+  animation: 0.5s shake;
 }
 
 @keyframes bounce {
@@ -234,11 +234,25 @@ button.over {
     min-width: 25px;
     margin: 0 5px;
     text-transform: uppercase;
-    height: 40px;
+    min-height: 20px;
+  }
+  .gameboard {
+    padding: 0px;
+    border: none;
   }
 
+  .item {
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+  }
   .long-key {
     margin: 0 1px;
-    min-width: 30px;
+    min-width: 20px;
+    min-height: 30px;
+  }
+
+  .App-header {
+    height: 100vh;
+    justify-content: space-evenly;
   }
 }
