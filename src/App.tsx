@@ -11,6 +11,7 @@ function returnWord() {
   const word = words[idx];
   return word;
 }
+
 const initialState: GameBoardState = {
   row0: [],
   row1: [],
@@ -84,16 +85,20 @@ const initialRowState: RowState = {
   rowLevel: 0,
 };
 
-function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { won, word } = state;
-  const initialWordObj = word.split('').reduce((acc: any, val) => {
+const wordHandler = (w: string) => {
+  return w.split('').reduce((acc: any, val) => {
     acc[val] = acc[val] + 1 || 1;
     return acc;
   }, {});
+};
+
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { won, word } = state;
+  const initialWordObj = wordHandler(word);
 
   const [rowInfo, setRowInfo] = useState<RowState>(initialRowState);
-  const [wordObject, setWordObject] = useState(initialWordObj);
+  const [wordObject, setWordObject] = useState<WordObject>(initialWordObj);
   const [error, setError] = useState('');
   const [lose, setLose] = useState(false);
   const { rowLevel, row } = rowInfo;
@@ -128,7 +133,7 @@ function App() {
     curRow?.classList.remove('incorrect');
     const btn = document.querySelector(`#${key}`);
     if (btn) {
-      if (row.length === 5 || won) {
+      if (row.length === 5 || won || lose) {
         return;
       }
     }
@@ -166,7 +171,11 @@ function App() {
   // complete reset //
 
   const resetHandler = () => {
+    const { row0 } = state;
     //dispatch a reset
+    if (!row0.length) {
+      return;
+    }
     dispatch({ type: 'reset', payload: ['green'] });
     setRowInfo(initialRowState);
     const tiles = document.querySelectorAll('.item');
@@ -181,10 +190,12 @@ function App() {
       node.classList.remove('yellow');
       node.classList.remove('green');
     });
+
     setError('');
     setLose(false);
   };
 
+  // func to ensure that we only color code letters according to their frequency
   const letterValidate = (key: string) => {
     if (wordObject[key] > 0) {
       setWordObject({ ...wordObject, [key]: (wordObject[key] -= 1) });
@@ -237,6 +248,10 @@ function App() {
 
     setWordObject(initialWordObj);
   }, [rowLevel]);
+
+  useEffect(() => {
+    setWordObject(wordHandler(word));
+  }, [lose, won]);
 
   // TODO: Fix Keybindings
   // useEffect(() => {

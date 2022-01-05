@@ -39,3 +39,7 @@ type RowState = {
   row: string[];
   rowLevel: number;
 };
+
+type WordObject = {
+  [key: string]: number;
+};
