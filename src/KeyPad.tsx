@@ -10,21 +10,26 @@ const KeyPad: React.FC<KeyPadProps> = ({
   rowHandler,
   submitHandler,
   rowLevel,
+  deleteHandler,
+  row,
 }) => {
   return (
     <div className='keypad__wrapper'>
       <div className='keypad'>
         {keys.map((rows, i) => (
-          <div key={i} className='row'>
+          <div key={i} className={`row row${i}`}>
             {rows.map((key, i) => (
               <button
                 key={key}
+                id={key}
                 className={
                   key === 'ENTER' || key === 'DEL' ? 'long-key' : 'key'
                 }
                 onClick={
                   key === 'ENTER'
                     ? () => submitHandler(rowLevel)
+                    : key === 'DEL'
+                    ? () => deleteHandler(row.length)
                     : () => rowHandler(key)
                 }
               >

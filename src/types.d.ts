@@ -1,11 +1,13 @@
 type GameBoardState = {
-  [key: string]: string[];
+  [key: string]: string[] | boolean;
 };
 
 type KeyPadProps = {
   rowHandler: (val: string) => void;
   submitHandler: (rowLevel: number) => void;
   rowLevel: number;
+  deleteHandler: (idx: number) => void;
+  row: string[];
 };
 
 type GameBoardProps = {
@@ -19,3 +21,8 @@ type ValidateKey = (
   l: string,
   index: number
 ) => 'green' | 'yellow' | 'grey';
+
+type Action = {
+  type: string;
+  payload: ReturnType<ValidateKey>[];
+};
