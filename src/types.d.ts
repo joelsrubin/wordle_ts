@@ -30,10 +30,10 @@ type ValidateKey = (
   index: number
 ) => 'green' | 'yellow' | 'grey';
 
-type Action = {
-  type: string;
-  payload: ReturnType<ValidateKey>[];
-};
+interface ActionsWithPayload<TypeAction, TypePayload> {
+  type: TypeAction;
+  payload: TypePayload;
+}
 
 type RowState = {
   row: string[];

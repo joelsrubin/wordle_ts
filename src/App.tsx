@@ -23,7 +23,6 @@ const initialState: GameBoardState = {
   word: returnWord(),
 };
 
-// @ts-ignore
 const reducer = (state: GameBoardState, action: any) => {
   switch (action.type) {
     case 'row0':
@@ -147,7 +146,17 @@ function App() {
     }
   };
 
-  const validateKey: ValidateKey = (word, letter, idx) => {
+  /**
+   * Takes in a word, letter and index:
+   * - If the word and the row have the same letter at the same index -> return 'green'.
+   * - If the word has the letter but not the same index -> return 'yellow'.
+   * - otherwise return 'grey' (word doesn't contain the letter)
+   * @param word
+   * @param letter
+   * @param idx
+   * @returns string
+   */
+  const validateKeyColor: ValidateKey = (word, letter, idx) => {
     if (word[idx] === row[idx]) {
       return 'green';
     } else if (word[idx] !== row[idx] && word.indexOf(letter) > -1) {
@@ -157,6 +166,13 @@ function App() {
     }
   };
 
+  /**
+   * Gets the letter in the space before the current index
+   *  - reverts the class
+   *  - removes text
+   *  - sets curRow to updated row with deleted char
+   * @param idx
+   */
   const deleteHandler = (idx: number) => {
     const input = getInput(idx - 1);
     if (input) {
@@ -167,8 +183,15 @@ function App() {
     setRowInfo({ ...rowInfo, row: temp });
   };
 
-  // complete reset //
-
+  /**
+   * The Reset
+   * - If no rows have been attempted, abort the reset
+   * - otherwise -> dispatch reset to reducer
+   * - reset all tiles to initial class state
+   * - reset all keys to initial class state
+   * - reset error state and lose state
+   * @returns
+   */
   const resetHandler = () => {
     const { row0 } = state;
     //dispatch a reset
@@ -194,7 +217,11 @@ function App() {
     setLose(false);
   };
 
-  // func to ensure that we only color code letters according to their frequency
+  /**
+   * func to ensure that we only color code letters according to their frequency
+   * @param key
+   * @returns boolean
+   */
   const letterValidate = (key: string) => {
     if (wordObject[key] > 0) {
       setWordObject({ ...wordObject, [key]: (wordObject[key] -= 1) });
@@ -203,15 +230,32 @@ function App() {
     return false;
   };
 
+  /**
+   * Handler for submitting each row to reducer:
+   * - if the row isn't complete, abort submission and return error state
+   * - If the row's word isn't listed in 'dictionary' return error state
+   * - otherwise:
+   * - validate each letter first against color status
+   * - then validate letters by frequency against counting object
+   * - finally submit row to reducer only if row is complete
+   * @returns
+   */
   const submitHandler = () => {
+    if (row.length < 5) {
+      setError('complete the row!');
+      return;
+    }
+    // if the word isn't listed return an error
     if (row.length && words.indexOf(row.join('')) < 0) {
       setError('Unlisted Word!');
       curRow?.classList.add('incorrect');
       return;
     }
+
+    // create the return array to dispatch to the reducer
     const result: ReturnType<ValidateKey>[] = [];
     row.forEach((letter, index) => {
-      const style = validateKey(word, letter, index);
+      const style = validateKeyColor(word, letter, index);
       const input = getInput(index);
       // const inputFinal = getInput(index, '.final__gameboard');
       const button = document.querySelector(`#${letter}`);
@@ -232,23 +276,22 @@ function App() {
       }
     });
 
-    if (row.length === 5) {
-      dispatch({ type: `row${rowLevel}`, payload: result });
-      setRowInfo({ row: [], rowLevel: rowLevel + 1 });
-    } else {
-      setError('complete the row!');
-    }
+    dispatch({ type: `row${rowLevel}`, payload: result });
+    setRowInfo({ row: [], rowLevel: rowLevel + 1 });
   };
 
+  // set Lose to true if we didn't get the answer within 5 guesses
   useEffect(() => {
     if (rowLevel > 5) {
       setLose(true);
     }
 
+    // every time we increment the level -> setWordObj back to initial word object in order to validate letterCount for each row
     setWordObject(initialWordObj);
   }, [rowLevel]);
 
   useEffect(() => {
+    // if lose or won -> setWordObject to the new word set by reducer
     setWordObject(wordHandler(word));
   }, [lose, won]);
 

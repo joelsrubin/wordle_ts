@@ -241,13 +241,17 @@ button.over {
     border: none;
   }
 
+  .keypad__wrapper {
+    width: 80%;
+  }
+
   .item {
-    min-height: 2.5rem;
-    min-width: 2.5rem;
+    max-height: 1rem;
+    max-width: 1rem;
   }
   .long-key {
     margin: 0 1px;
-    min-width: 20px;
+    min-width: 60px;
     min-height: 30px;
   }
 
