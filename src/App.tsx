@@ -104,7 +104,6 @@ function App() {
   const { rowLevel, row } = rowInfo;
   const curRow = document.querySelector(`.game-row${rowLevel}`);
 
-  console.log({ wordObject });
   const getInput = (idx: number, grid: string = '.gameboard') => {
     const board = document.querySelector(grid);
     const row = board?.querySelector(`.game-row${rowLevel}`);
