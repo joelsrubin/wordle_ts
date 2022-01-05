@@ -207,7 +207,10 @@ function App() {
       const button = document.querySelector(`#${letter}`);
 
       if (input) {
-        if (letterValidate(letter)) {
+        if (
+          letterValidate(letter) ||
+          (!letterValidate(letter) && style === 'grey')
+        ) {
           input.classList.add(style);
         }
 
