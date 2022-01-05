@@ -79,8 +79,11 @@ function App() {
   };
 
   const rowHandler = (key: string) => {
-    if (row.length === 5 || state.won) {
-      return;
+    const btn = document.querySelector(`#${key}`);
+    if (btn) {
+      if (row.length === 5 || state.won || btn.classList.contains('grey')) {
+        return;
+      }
     }
     const index = row.length;
     const input = getInput(index);
