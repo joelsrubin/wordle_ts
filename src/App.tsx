@@ -86,14 +86,20 @@ const initialRowState: RowState = {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { won, word } = state;
+  const initialWordObj = word.split('').reduce((acc: any, val) => {
+    acc[val] = acc[val] + 1 || 1;
+    return acc;
+  }, {});
+
   const [rowInfo, setRowInfo] = useState<RowState>(initialRowState);
+  const [wordObject, setWordObject] = useState(initialWordObj);
   const [error, setError] = useState('');
   const [lose, setLose] = useState(false);
   const { rowLevel, row } = rowInfo;
   const curRow = document.querySelector(`.game-row${rowLevel}`);
 
-  const { won, word } = state;
-
+  console.log({ wordObject });
   const getInput = (idx: number, grid: string = '.gameboard') => {
     const board = document.querySelector(grid);
     const row = board?.querySelector(`.game-row${rowLevel}`);
@@ -179,6 +185,14 @@ function App() {
     setLose(false);
   };
 
+  const letterValidate = (key: string) => {
+    if (wordObject[key] > 0) {
+      setWordObject({ ...wordObject, [key]: (wordObject[key] -= 1) });
+      return true;
+    }
+    return false;
+  };
+
   const submitHandler = () => {
     if (row.length && words.indexOf(row.join('')) < 0) {
       setError('Unlisted Word!');
@@ -187,13 +201,16 @@ function App() {
     }
     const result: ReturnType<ValidateKey>[] = [];
     row.forEach((letter, index) => {
-      const style = validateKey(state.word, letter, index);
+      const style = validateKey(word, letter, index);
       const input = getInput(index);
       // const inputFinal = getInput(index, '.final__gameboard');
       const button = document.querySelector(`#${letter}`);
 
       if (input) {
-        input.classList.add(style);
+        if (letterValidate(letter)) {
+          input.classList.add(style);
+        }
+
         if (style === 'grey' && button) {
           button.classList.add(style);
         }
@@ -201,6 +218,7 @@ function App() {
         result.push(style);
       }
     });
+
     if (row.length === 5) {
       dispatch({ type: `row${rowLevel}`, payload: result });
       setRowInfo({ row: [], rowLevel: rowLevel + 1 });
@@ -213,6 +231,8 @@ function App() {
     if (rowLevel > 5) {
       setLose(true);
     }
+
+    setWordObject(initialWordObj);
   }, [rowLevel]);
 
   // TODO: Fix Keybindings
@@ -230,7 +250,7 @@ function App() {
     if (lose) {
       return `You Lose. The Word is ${word}!`;
     }
-    return 'Wordler';
+    return 'WORDLER';
   };
 
   // TODO: add key handling
