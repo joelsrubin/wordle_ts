@@ -10,7 +10,7 @@ type GameBoardState = {
 };
 
 type KeyPadProps = {
-  rowHandler: (val: string) => void;
+  rowHandler: (e: any, val: string) => void;
   submitHandler: (rowLevel: number) => void;
   rowLevel: number;
   deleteHandler: (idx: number) => void;

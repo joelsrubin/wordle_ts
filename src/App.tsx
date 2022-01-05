@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 
 import './App.css';
 import FinalGraph from './FinalGraph';
@@ -92,6 +92,8 @@ function App() {
   const { rowLevel, row } = rowInfo;
   const curRow = document.querySelector(`.game-row${rowLevel}`);
 
+  const { won, word } = state;
+
   const getInput = (idx: number, grid: string = '.gameboard') => {
     const board = document.querySelector(grid);
     const row = board?.querySelector(`.game-row${rowLevel}`);
@@ -99,11 +101,28 @@ function App() {
     return cell;
   };
 
-  const rowHandler = (key: string) => {
+  const rowHandler = (e: any, key: string) => {
+    // TODO: Fix Keybindings
+    // console.log(key);
+    // if (key === 'Enter') {
+    //   console.log('here');
+    //   return submitHandler();
+    // }
+
+    // if (key === 'Delete') {
+    //   e.preventDefault();
+    //   return deleteHandler(curIdx);
+    // }
+    // // handle key bindings -> only allow letter keys
+    // const abc = 'abcdefghijklmnopqrstuvwxyz';
+    // if (abc.indexOf(key) < 0) {
+    //   return;
+    // }
+
     curRow?.classList.remove('incorrect');
     const btn = document.querySelector(`#${key}`);
     if (btn) {
-      if (row.length === 5 || state.won || btn.classList.contains('grey')) {
+      if (row.length === 5 || won) {
         return;
       }
     }
@@ -196,8 +215,12 @@ function App() {
     }
   }, [rowLevel]);
 
+  // TODO: Fix Keybindings
+  // useEffect(() => {
+  //   document.addEventListener('keypress', (e) => rowHandler(e, e.key));
+  // }, []);
+
   const textRender = () => {
-    const { won, word } = state;
     if (error) {
       return error;
     }

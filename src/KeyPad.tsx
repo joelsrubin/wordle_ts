@@ -31,7 +31,7 @@ const KeyPad: React.FC<KeyPadProps> = ({
                     ? () => submitHandler(rowLevel)
                     : key === 'DEL'
                     ? () => deleteHandler(row.length)
-                    : () => rowHandler(key)
+                    : (e) => rowHandler(e, key)
                 }
               >
                 {key === 'DEL' ? (
