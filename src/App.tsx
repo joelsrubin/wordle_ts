@@ -258,7 +258,7 @@ function App() {
           >
             give up?
           </button>
-          <h1>{textRender()}</h1>
+          <h3>{textRender()}</h3>
           <button
             className='over'
             onClick={() => {
