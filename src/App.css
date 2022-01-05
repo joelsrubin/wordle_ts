@@ -231,14 +231,19 @@ button.over {
 
 @media only screen and (max-width: 900px) {
   .key {
-    min-width: 25px;
-    margin: 0 5px;
+    min-width: 35px;
+    margin: 0 1px;
     text-transform: uppercase;
     min-height: 20px;
   }
   .gameboard {
-    padding: 0px;
+    padding: 10px 0px;
     border: none;
+    grid-gap: 5px;
+  }
+
+  .game-row {
+    grid-gap: 5px;
   }
 
   .keypad__wrapper {
@@ -246,18 +251,20 @@ button.over {
   }
 
   .item {
-    max-height: 1rem;
-    max-width: 1rem;
+    height: 20px;
+    width: 20px;
   }
   .long-key {
     margin: 0 1px;
-    min-width: 60px;
+    min-width: 50px;
     min-height: 30px;
+    font-size: 12px;
   }
 
   .App-header {
     height: 100vh;
-    max-width: 100vw;
-    justify-content: space-evenly;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
   }
 }
