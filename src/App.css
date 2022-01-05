@@ -85,34 +85,40 @@ button {
 .item {
   background-color: var(--darkGray);
   border-radius: 5px;
-}
 
-.item input {
-  border-radius: 5px;
-  background: inherit;
   outline: none;
   border: none;
-  color: var(--black);
+  min-height: 3rem;
+  min-width: 3rem;
+  color: var(--color-tone-1);
   text-align: center;
   font-family: inherit;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* transform: rotateY(180deg); */
 }
 
-.item input.green {
+.item.green {
   background-color: var(--darkendGreen);
   color: var(--color-tone-1);
+  border: none;
 }
 
-.item input.yellow {
+.item.yellow {
   background: var(--darkendYellow);
   color: var(--color-tone-1);
+  border: none;
 }
 
-.item input.grey {
+.item.grey {
   background-color: rgb(75, 85, 85);
   color: var(--color-tone-1);
+  border: none;
 }
 
 .keypad {
@@ -164,7 +170,7 @@ button.over {
   margin: 0 20px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
   .key {
     min-width: 25px;
     margin: 0 5px;
@@ -175,8 +181,5 @@ button.over {
   .long-key {
     margin: 0 1px;
     min-width: 30px;
-  }
-  .App {
-    justify-content: center;
   }
 }

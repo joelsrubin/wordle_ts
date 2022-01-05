@@ -12,11 +12,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           <div key={i} className={`game-row game-row${i}`}>
             {row.map((_: any, j: number) => (
               <div key={j} className={`item item${j}`}>
-                <input
-                  type='text'
-                  readOnly
-                  style={{ height: height + 'px', width: width + 'px' }}
-                />
+                {_}
               </div>
             ))}
           </div>

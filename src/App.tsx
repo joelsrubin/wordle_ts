@@ -1,4 +1,4 @@
-import { ReactText, useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
 import './App.css';
 import FinalGraph from './FinalGraph';
@@ -65,7 +65,7 @@ const reducer = (state: GameBoardState, action: Action) => {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [row, setRow] = useState<string[]>([]);
+  const [row, setRow] = useState<Array<string>>([]);
   const [error, setError] = useState('');
   const [rowLevel, setRowLevel] = useState(0);
   const [lose, setLose] = useState(false);
@@ -74,8 +74,8 @@ function App() {
     const board = document.querySelector(grid);
     const row = board?.querySelector(`.game-row${rowLevel}`);
     const cell = row?.querySelector(`.item${idx}`);
-    const input = cell?.querySelector('input');
-    return input;
+
+    return cell;
   };
 
   const rowHandler = (key: string) => {
@@ -91,7 +91,7 @@ function App() {
     setError('');
     setRow([...row, key]);
     if (input) {
-      input.value = key;
+      input.innerHTML = key;
     }
   };
 
@@ -106,16 +106,11 @@ function App() {
   };
 
   const deleteHandler = (idx: number) => {
-    // get the previous input
     const input = getInput(idx - 1);
-    console.log({ input });
-    // set the value back to ''
     if (input) {
-      input.value = '';
+      input.innerHTML = '';
     }
-    // set the array correctly in state
     const temp = row.slice(0, idx - 1);
-    console.log({ temp });
     setRow(temp);
   };
 
@@ -162,7 +157,7 @@ function App() {
     if (lose) {
       return `You Lose. The Word is ${word}!`;
     }
-    return 'My TS Wordle';
+    return 'Wordler';
   };
 
   // TODO: add key handling
