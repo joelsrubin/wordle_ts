@@ -90,6 +90,7 @@ function App() {
   const [error, setError] = useState('');
   const [lose, setLose] = useState(false);
   const { rowLevel, row } = rowInfo;
+  const curRow = document.querySelector(`.game-row${rowLevel}`);
 
   const getInput = (idx: number, grid: string = '.gameboard') => {
     const board = document.querySelector(grid);
@@ -99,6 +100,7 @@ function App() {
   };
 
   const rowHandler = (key: string) => {
+    curRow?.classList.remove('incorrect');
     const btn = document.querySelector(`#${key}`);
     if (btn) {
       if (row.length === 5 || state.won || btn.classList.contains('grey')) {
@@ -159,6 +161,11 @@ function App() {
   };
 
   const submitHandler = () => {
+    if (row.length && words.indexOf(row.join('')) < 0) {
+      setError('Unlisted Word!');
+      curRow?.classList.add('incorrect');
+      return;
+    }
     const result: ReturnType<ValidateKey>[] = [];
     row.forEach((letter, index) => {
       const style = validateKey(state.word, letter, index);
