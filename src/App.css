@@ -262,7 +262,8 @@ button.over {
   }
 
   .App-header {
-    height: 100vh;
+    padding-top: 10px;
+    height: 90vh;
     width: 100vw;
     align-items: center;
     justify-content: center;

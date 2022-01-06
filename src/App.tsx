@@ -194,7 +194,8 @@ function App() {
    */
   const resetHandler = () => {
     const { row0 } = state;
-    //dispatch a reset
+
+    // if we haven't given up & we haven't attempted one row -> abort
     if (!row0.length && !lose) {
       return;
     }
