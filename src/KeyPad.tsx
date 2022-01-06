@@ -15,35 +15,27 @@ const KeyPad: React.FC<KeyPadProps> = ({
   row,
 }) => {
   return (
-    <div className='keypad__wrapper'>
-      <div className='keypad'>
-        {keys.map((rows, i) => (
-          <div key={i} className={`row row${i}`}>
-            {rows.map((key, i) => (
-              <button
-                key={key}
-                id={key}
-                className={
-                  key === 'ENTER' || key === 'DEL' ? 'long-key' : 'key'
-                }
-                onClick={
-                  key === 'ENTER'
-                    ? () => submitHandler(rowLevel)
-                    : key === 'DEL'
-                    ? () => deleteHandler(row.length)
-                    : (e) => rowHandler(e, key)
-                }
-              >
-                {key === 'DEL' ? (
-                  <FiDelete style={{ fontSize: '20px' }} />
-                ) : (
-                  key
-                )}
-              </button>
-            ))}
-          </div>
-        ))}
-      </div>
+    <div className='keypad'>
+      {keys.map((rows, i) => (
+        <div key={i} className={`row row${i}`}>
+          {rows.map((key, i) => (
+            <button
+              key={key}
+              id={key}
+              className={key === 'ENTER' || key === 'DEL' ? 'long-key' : 'key'}
+              onClick={
+                key === 'ENTER'
+                  ? () => submitHandler(rowLevel)
+                  : key === 'DEL'
+                  ? () => deleteHandler(row.length)
+                  : (e) => rowHandler(e, key)
+              }
+            >
+              {key === 'DEL' ? <FiDelete style={{ fontSize: '20px' }} /> : key}
+            </button>
+          ))}
+        </div>
+      ))}
     </div>
   );
 };

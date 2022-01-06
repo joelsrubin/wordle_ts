@@ -294,6 +294,9 @@ function App() {
   useEffect(() => {
     // if lose or won -> setWordObject to the new word set by reducer
     setWordObject(wordHandler(word));
+    if (lose && error) {
+      setError('');
+    }
   }, [lose, won]);
 
   // TODO: Fix Keybindings
