@@ -4,7 +4,6 @@ const Results: React.FC<ResultsProps> = ({ won, lose }) => {
 
   useEffect(() => {
     const streak = localStorage.getItem('streak');
-    setScore(parseInt(streak ?? '0'));
     winLoseHandler(streak ?? '0');
   }, []);
 
