@@ -4,6 +4,7 @@ import './App.css';
 import FinalGraph from './FinalGraph';
 import GameBoard from './GameBoard';
 import KeyPad from './KeyPad';
+import Results from './Results';
 import { words } from './words';
 
 function returnWord() {
@@ -71,6 +72,7 @@ const reducer = (state: GameBoardState, action: any) => {
       return {
         ...initialState,
         word: returnWord(),
+        won: false,
       };
     default:
       return {
@@ -312,7 +314,7 @@ function App() {
       return 'You Win!';
     }
     if (lose) {
-      return `You Lose. The Word is ${word}!`;
+      return `${word}!`;
     }
     return 'WORDLER';
   };
@@ -329,10 +331,13 @@ function App() {
   //   document.addEventListener('keypress', keyHandler);
   //   return () => document.removeEventListener('keypress', keyHandler);
   // }, []);
-
+  const winOrLose = won || lose;
   return (
     <div className='App'>
       <header className='App-header'>
+        {winOrLose && (
+          <Results won={won} lose={lose} resetHandler={resetHandler} />
+        )}
         <div className='header-text'>
           <button
             className='over'
@@ -344,7 +349,7 @@ function App() {
           </button>
           <h3>{textRender()}</h3>
           <button
-            className='over'
+            className='over reset'
             onClick={() => {
               resetHandler();
             }}

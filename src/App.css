@@ -229,6 +229,22 @@ button.over {
   margin: 0 20px;
 }
 
+.over.reset {
+  z-index: 99;
+}
+
+.results {
+  position: absolute;
+  background-color: rgba(6, 5, 5, 0.488);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}
+
 @media only screen and (max-width: 900px) {
   .key {
     min-width: 35px;

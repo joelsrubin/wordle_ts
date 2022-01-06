@@ -43,3 +43,9 @@ type RowState = {
 type WordObject = {
   [key: string]: number;
 };
+
+type ResultsProps = {
+  won: boolean;
+  lose: boolean;
+  resetHandler: () => void;
+};
