@@ -209,6 +209,7 @@ function App() {
     const keys = document.querySelector('.keypad')?.querySelectorAll('button');
     keys?.forEach((key) => {
       key.classList.remove('grey');
+      key.classList.remove('green');
     });
     tiles.forEach((node) => {
       node.innerHTML = '';
