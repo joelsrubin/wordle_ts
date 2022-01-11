@@ -28,7 +28,7 @@ type ValidateKey = (
   w: string,
   l: string,
   index: number
-) => 'green' | 'yellow' | 'grey';
+) => 'green' | 'yellow' | 'grey' | '';
 
 interface ActionsWithPayload<TypeAction, TypePayload> {
   type: TypeAction;

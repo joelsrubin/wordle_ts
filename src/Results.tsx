@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 const Results: React.FC<ResultsProps> = ({ won, lose }) => {
   const [score, setScore] = useState(0);
 
@@ -10,19 +11,18 @@ const Results: React.FC<ResultsProps> = ({ won, lose }) => {
   const winLoseHandler = (streak: string) => {
     if (won) {
       localStorage.setItem('streak', String(Number(streak) + 1));
-      setScore(Number(streak) + 1);
+      toast.success('Nice! Streak is now: ' + (Number(streak) + 1), {
+        icon: '👏',
+      });
     }
     if (lose) {
       localStorage.setItem('streak', '0');
+      toast.error('You lost! Streak is now: 0');
       setScore(0);
     }
   };
 
-  return (
-    <div className='results'>
-      <h3>Streak is at {score || 0}</h3>
-    </div>
-  );
+  return <></>;
 };
 
 export default Results;

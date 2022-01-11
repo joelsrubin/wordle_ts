@@ -229,11 +229,16 @@ button.over {
   margin: 0 20px;
 }
 
-.over.reset {
-  z-index: 99;
+button[disabled] {
+  background: var(--lightGray);
+  color: var(--darkGray);
 }
 
-.results {
+/* .over.reset {
+  z-index: 99;
+} */
+
+/* .results {
   position: absolute;
   background-color: rgba(6, 5, 5, 0.488);
   height: 100vh;
@@ -243,7 +248,7 @@ button.over {
   justify-content: center;
   align-items: center;
   z-index: 0;
-}
+} */
 
 @media only screen and (max-width: 900px) {
   .key {
@@ -267,21 +272,13 @@ button.over {
   }
 
   .item {
-    max-height: 10px;
-    max-width: 10px;
+    /* max-height: 10px;
+    max-width: 10px; */
   }
   .long-key {
     margin: 0 1px;
     min-width: 50px;
     min-height: 30px;
     font-size: 12px;
-  }
-
-  .App-header {
-    height: 100vh;
-    width: 100vw;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 50px;
   }
 }

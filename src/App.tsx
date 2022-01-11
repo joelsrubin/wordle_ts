@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
-
+import toast, { Toaster } from 'react-hot-toast';
 import './App.css';
 import FinalGraph from './FinalGraph';
 import GameBoard from './GameBoard';
@@ -100,7 +100,7 @@ function App() {
 
   const [rowInfo, setRowInfo] = useState<RowState>(initialRowState);
   const [wordObject, setWordObject] = useState<WordObject>(initialWordObj);
-  const [error, setError] = useState('');
+
   const [lose, setLose] = useState(false);
   const { rowLevel, row } = rowInfo;
   const curRow = document.querySelector(`.game-row${rowLevel}`);
@@ -140,7 +140,6 @@ function App() {
     const index = row.length;
     const input = getInput(index);
 
-    setError('');
     setRowInfo({ ...rowInfo, row: [...row, key] });
     if (input) {
       input.innerHTML = key;
@@ -159,12 +158,15 @@ function App() {
    * @returns string
    */
   const validateKeyColor: ValidateKey = (word, letter, idx) => {
+    if (!word.includes(letter)) {
+      return 'grey';
+    }
     if (word[idx] === row[idx]) {
       return 'green';
     } else if (word[idx] !== row[idx] && word.indexOf(letter) > -1) {
       return 'yellow';
     } else {
-      return 'grey';
+      return '';
     }
   };
 
@@ -216,7 +218,6 @@ function App() {
       node.classList.remove('green');
     });
 
-    setError('');
     setLose(false);
   };
 
@@ -245,12 +246,12 @@ function App() {
    */
   const submitHandler = () => {
     if (row.length < 5) {
-      setError('complete the row!');
+      toast.error("You haven't completed the row!", { duration: 2000 });
       return;
     }
     // if the word isn't listed return an error
     if (row.length && words.indexOf(row.join('')) < 0) {
-      setError('Unlisted Word!');
+      toast.error('Unlisted Word!', { duration: 2000 });
       curRow?.classList.add('incorrect');
       return;
     }
@@ -296,28 +297,12 @@ function App() {
   useEffect(() => {
     // if lose or won -> setWordObject to the new word set by reducer
     setWordObject(wordHandler(word));
-    if (lose && error) {
-      setError('');
-    }
   }, [lose, won]);
 
   // TODO: Fix Keybindings
   // useEffect(() => {
   //   document.addEventListener('keypress', (e) => rowHandler(e, e.key));
   // }, []);
-
-  const textRender = () => {
-    if (error) {
-      return error;
-    }
-    if (won) {
-      return 'You Win!';
-    }
-    if (lose) {
-      return `${word}!`;
-    }
-    return 'WORDLER';
-  };
 
   // TODO: add key handling
   // const keyHandler = (e: any) => {
@@ -333,7 +318,7 @@ function App() {
   // }, []);
   const winOrLose = won || lose;
   return (
-    <div className='App'>
+    <>
       <header className='App-header'>
         {winOrLose && (
           <Results won={won} lose={lose} resetHandler={resetHandler} />
@@ -344,10 +329,11 @@ function App() {
             onClick={() => {
               setLose(true);
             }}
+            disabled={won || lose}
           >
             give up?
           </button>
-          <h3>{textRender()}</h3>
+          <h3>WORDLER</h3>
           <button
             className='over reset'
             onClick={() => {
@@ -366,7 +352,8 @@ function App() {
           row={row}
         />
       </header>
-    </div>
+      <Toaster />
+    </>
   );
 }
 
