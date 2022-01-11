@@ -322,14 +322,7 @@ function App() {
   return (
     <>
       <header className='App-header'>
-        {winOrLose && (
-          <Results
-            won={won}
-            lose={lose}
-            resetHandler={resetHandler}
-            word={word}
-          />
-        )}
+        {winOrLose && <Results won={won} lose={lose} word={word} />}
         <div className='header-text'>
           <button
             className='over'
@@ -342,7 +335,7 @@ function App() {
           </button>
           <h3>WORDLER</h3>
           <button
-            className='over reset'
+            className={won || lose ? 'over reset' : 'over'}
             onClick={() => {
               resetHandler();
             }}

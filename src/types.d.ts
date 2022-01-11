@@ -47,6 +47,5 @@ type WordObject = {
 type ResultsProps = {
   won: boolean;
   lose: boolean;
-  resetHandler: () => void;
   word: string;
 };
