@@ -197,6 +197,7 @@ function App() {
    * @returns
    */
   const resetHandler = () => {
+    toast.dismiss('streak');
     const { row0 } = state;
 
     // if we haven't given up & we haven't attempted one row -> abort
@@ -322,7 +323,12 @@ function App() {
     <>
       <header className='App-header'>
         {winOrLose && (
-          <Results won={won} lose={lose} resetHandler={resetHandler} />
+          <Results
+            won={won}
+            lose={lose}
+            resetHandler={resetHandler}
+            word={word}
+          />
         )}
         <div className='header-text'>
           <button
@@ -353,7 +359,11 @@ function App() {
           row={row}
         />
       </header>
-      <Toaster />
+      <Toaster
+        containerStyle={{
+          top: 65,
+        }}
+      />
     </>
   );
 }
