@@ -242,7 +242,7 @@ function App() {
   // first E could be yellow but let's check if rest have a green that is === E
   const greenLater = (key: string, row: string[], startingIndex: number) => {
     for (let i = startingIndex + 1; i < row.length; i++) {
-      if (row[i] === word[i]) {
+      if (word[i] === key && row[i] === key) {
         return true;
       }
     }
