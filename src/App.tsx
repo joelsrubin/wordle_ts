@@ -242,10 +242,12 @@ function App() {
   // first E could be yellow but let's check if rest have a green that is === E
   const greenLater = (key: string, row: string[], startingIndex: number) => {
     for (let i = startingIndex + 1; i < row.length; i++) {
+      // so starting one space ahead, check if this key is green elsewhere and if so return true
       if (word[i] === key && row[i] === key) {
         return true;
       }
     }
+    // otherwise never green again, so return false
     return false;
   };
 
@@ -372,6 +374,16 @@ function App() {
           deleteHandler={deleteHandler}
           row={row}
         />
+        <footer>
+          <div>
+            <h5>
+              Inspired by the original:{' '}
+              <a href='https://www.powerlanguage.co.uk/wordle/' target='_blank'>
+                Wordle
+              </a>
+            </h5>
+          </div>
+        </footer>
       </header>
       <Toaster
         containerStyle={

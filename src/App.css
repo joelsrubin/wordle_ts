@@ -13,6 +13,19 @@
   --color-tone-1: #d7dadc;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+h5 {
+  font-size: 10px;
+}
+
+a {
+  color: white;
+  text-decoration: underline;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -28,6 +41,11 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
 }
 
 .App-link {
