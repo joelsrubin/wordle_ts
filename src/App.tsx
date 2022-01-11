@@ -272,7 +272,7 @@ function App() {
           input.classList.add(style);
         }
 
-        if (style === 'grey' && button) {
+        if ((style === 'green' && button) || (style === 'grey' && button)) {
           button.classList.add(style);
         }
         // inputFinal.classList.add(style);

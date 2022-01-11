@@ -217,6 +217,9 @@ button {
 button.key.grey {
   background: rgb(75, 85, 85);
 }
+button.key.green {
+  background: var(--darkendGreen);
+}
 
 .header-text {
   display: flex;
