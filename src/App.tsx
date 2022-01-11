@@ -273,6 +273,10 @@ function App() {
           (!letterValidate(letter) && style === 'grey')
         ) {
           input.classList.add(style);
+        } else if (!letterValidate(letter) && style === 'yellow') {
+          input.classList.add('grey');
+        } else if (!letterValidate(letter) && style === 'green') {
+          input.classList.add('green');
         }
 
         if ((style === 'green' && button) || (style === 'grey' && button)) {
@@ -330,13 +334,13 @@ function App() {
             onClick={() => {
               setLose(true);
             }}
-            disabled={won || lose}
+            disabled={winOrLose}
           >
             give up?
           </button>
           <h3>WORDLER</h3>
           <button
-            className={won || lose ? 'over reset' : 'over'}
+            className={winOrLose ? 'over reset' : 'over'}
             onClick={() => {
               resetHandler();
             }}
