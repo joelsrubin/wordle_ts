@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { isMobile } from 'react-device-detect';
 import './App.css';
 import FinalGraph from './FinalGraph';
 import GameBoard from './GameBoard';
@@ -353,9 +354,15 @@ function App() {
         />
       </header>
       <Toaster
-        containerStyle={{
-          top: 65,
-        }}
+        containerStyle={
+          isMobile
+            ? {
+                top: 65,
+              }
+            : {
+                top: 100,
+              }
+        }
       />
     </>
   );
