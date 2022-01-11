@@ -237,6 +237,18 @@ function App() {
     return false;
   };
 
+  // word is A G R E S S
+  // we have E G R E S S
+  // first E could be yellow but let's check if rest have a green that is === E
+  const greenLater = (key: string, row: string[], startingIndex: number) => {
+    for (let i = startingIndex + 1; i < row.length; i++) {
+      if (row[i] === word[i]) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   /**
    * Handler for submitting each row to reducer:
    * - if the row isn't complete, abort submission and return error state
@@ -269,12 +281,16 @@ function App() {
 
       if (input) {
         if (
-          letterValidate(letter) ||
+          // check if letter is valid (not 0 left) and it isn't green later -> if it's green later we can make it yellow but if it's green later we can't make it yellow
+          (letterValidate(letter) && !greenLater(letter, row, index)) ||
+          // also check if it's invalid but style is grey -> still set grey
           (!letterValidate(letter) && style === 'grey')
         ) {
           input.classList.add(style);
+          // check if it's invalid but style is yellow -> set style to grey as we no longer have any letters left in the count so we've already assigned all yellows available
         } else if (!letterValidate(letter) && style === 'yellow') {
           input.classList.add('grey');
+          // check if letter is invalid but green -> this means the user has entered too many of that letter but it's green later
         } else if (!letterValidate(letter) && style === 'green') {
           input.classList.add('green');
         }
