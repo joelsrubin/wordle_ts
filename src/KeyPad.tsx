@@ -28,7 +28,7 @@ const KeyPad: React.FC<KeyPadProps> = ({
                   ? () => submitHandler(rowLevel)
                   : key === 'DEL'
                   ? () => deleteHandler(row.length)
-                  : (e) => rowHandler(e, key)
+                  : () => rowHandler(key)
               }
             >
               {key === 'DEL' ? <FiDelete style={{ fontSize: '20px' }} /> : key}

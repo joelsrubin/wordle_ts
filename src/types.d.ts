@@ -3,7 +3,7 @@ type GameBoardState = {
 };
 
 type KeyPadProps = {
-  rowHandler: (e: any, val: string) => void;
+  rowHandler: (key: string) => void;
   submitHandler: (rowLevel: number) => void;
   rowLevel: number;
   deleteHandler: (idx: number) => void;
@@ -39,6 +39,10 @@ type WordObject = {
 
 type ResultsProps = {
   won: boolean;
-  lose: boolean;
+  lost: boolean;
   word: string;
+};
+
+type Action = {
+  type: 'reset' | '';
 };

@@ -19,11 +19,10 @@ const initialState: GameBoardState = {
   word: returnWord(),
 };
 
-const reducer = (state: GameBoardState, action: any) => {
+const reducer = (state: GameBoardState, action: Action) => {
   switch (action.type) {
     case 'reset':
       return {
-        ...initialState,
         word: returnWord(),
       };
     default:
@@ -38,6 +37,7 @@ const initialRowState: RowState = {
   rowLevel: 0,
 };
 
+// creates a counting object for comparison in letter val
 const wordHandler = (w: string) => {
   return w.split('').reduce((acc: any, val) => {
     acc[val] = acc[val] + 1 || 1;
@@ -46,52 +46,49 @@ const wordHandler = (w: string) => {
 };
 
 function App() {
-  const { width, height } = useWindowSize();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { word } = state;
   const initialWordObj = wordHandler(word);
-  const [rowInfo, setRowInfo] = useState<RowState>(initialRowState);
+  const { width, height } = useWindowSize();
   const [wordObject, setWordObject] = useState<WordObject>(initialWordObj);
-  const [lose, setLose] = useState(false);
+  const [rowInfo, setRowInfo] = useState<RowState>(initialRowState);
+  const [lost, setLost] = useState(false);
   const [won, setWon] = useState(false);
   const { rowLevel, row } = rowInfo;
 
   const curRow = document.querySelector(`.game-row${rowLevel}`);
 
-  const getInput = (idx: number, grid: string = '.gameboard') => {
-    const board = document.querySelector(grid);
+  const getInput = (idx: number) => {
+    const board = document.querySelector('.gameboard');
     const row = board?.querySelector(`.game-row${rowLevel}`);
     const cell = row?.querySelector(`.item${idx}`);
     return cell;
   };
 
-  const rowHandler = (e: any, key: string) => {
+  const rowHandler = (key: string) => {
     // TODO: Fix Keybindings
-    // console.log(key);
-    // if (key === 'Enter') {
-    //   console.log('here');
-    //   return submitHandler();
-    // }
+    console.log(key);
+    if (key === 'Enter') {
+      console.log('here');
+      return submitHandler();
+    }
 
     // if (key === 'Delete') {
     //   e.preventDefault();
     //   return deleteHandler(curIdx);
     // }
-    // // handle key bindings -> only allow letter keys
-    // const abc = 'abcdefghijklmnopqrstuvwxyz';
-    // if (abc.indexOf(key) < 0) {
-    //   return;
-    // }
+    // handle key bindings -> only allow letter keys
 
     curRow?.classList.remove('incorrect');
     const btn = document.querySelector(`#${key}`);
     if (btn) {
-      if (row.length === 5 || won || lose) {
+      if (row.length === 5 || won || lost) {
         return;
       }
     }
     const index = row.length;
     const input = getInput(index);
+    const newRow = row.concat(key);
 
     setRowInfo({ ...rowInfo, row: [...row, key] });
     if (input) {
@@ -146,14 +143,14 @@ function App() {
    * - otherwise -> dispatch reset to reducer
    * - reset all tiles to initial class state
    * - reset all keys to initial class state
-   * - reset error state and lose state
+   * - reset error state and lost state
    * @returns
    */
   const resetHandler = () => {
     toast.dismiss('streak');
     setWon(false);
     // if we haven't given up & we haven't attempted one row -> abort
-    // if (!row.length && !lose) {
+    // if (!row.length && !lost) {
     //   return;
     // }
     dispatch({ type: 'reset' });
@@ -172,7 +169,7 @@ function App() {
       node.classList.remove('green');
     });
 
-    setLose(false);
+    setLost(false);
   };
 
   /**
@@ -218,7 +215,7 @@ function App() {
       return;
     }
     // if the word isn't listed return an error
-    if (row.length && words.indexOf(row.join('')) < 0) {
+    if (row.length && !words.includes(row.join(''))) {
       toast.error('Unlisted Word!', { duration: 2000 });
       curRow?.classList.add('incorrect');
       return;
@@ -249,7 +246,6 @@ function App() {
         if ((style === 'green' && button) || (style === 'grey' && button)) {
           button.classList.add(style);
         }
-        // inputFinal.classList.add(style);
       }
     });
     if (row.join('') === word) {
@@ -259,61 +255,55 @@ function App() {
     setRowInfo({ row: [], rowLevel: rowLevel + 1 });
   };
 
-  // set Lose to true if we didn't get the answer within 5 guesses
+  // TODO: add key handling
+  const keyHandler = (e: any) => {
+    const abc = 'abcdefghijklmnopqrstuvwxyz';
+    if (abc.indexOf(e.key) > -1) {
+      console.log(e.key);
+      rowHandler(e.key);
+    }
+  };
+
+  // set Lost to true if we didn't get the answer within 5 guesses
   useEffect(() => {
     if (rowLevel > 5) {
-      setLose(true);
+      setLost(true);
     }
-
     // every time we increment the level -> setWordObj back to initial word object in order to validate letterCount for each row
     setWordObject(initialWordObj);
   }, [rowLevel]);
 
   useEffect(() => {
-    // if lose or won -> setWordObject to the new word set by reducer
+    // if lost or won -> setWordObject to the new word set by reducer
     setWordObject(wordHandler(word));
-  }, [lose, won]);
+  }, [lost, won]);
 
-  // TODO: Fix Keybindings
-  // useEffect(() => {
-  //   document.addEventListener('keypress', (e) => rowHandler(e, e.key));
-  // }, []);
-
-  // TODO: add key handling
-  // const keyHandler = (e: any) => {
-  //   const abc = 'abcdefghijklmnopqrstuvwxyz';
-  //   if (abc.indexOf(e.key) > -1) {
-  //     rowHandler(e.key);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener('keypress', keyHandler);
-  //   return () => document.removeEventListener('keypress', keyHandler);
-  // }, []);
-  const winOrLose = won || lose;
+  useEffect(() => {
+    document.addEventListener('keypress', keyHandler);
+  }, []);
+  const winOrLost = won || lost;
   return (
     <>
       <header className='App-header'>
-        {winOrLose && (
+        {winOrLost && (
           <>
             {won && <Confetti width={width} height={height} recycle={false} />}
-            <Results won={won} lose={lose} word={word} />
+            <Results won={won} lost={lost} word={word} />
           </>
         )}
         <div className='header-text'>
           <button
             className='over'
             onClick={() => {
-              setLose(true);
+              setLost(true);
             }}
-            disabled={winOrLose}
+            disabled={winOrLost}
           >
             give up?
           </button>
           <h3>WORDLER</h3>
           <button
-            className={winOrLose ? 'over reset' : 'over'}
+            className={winOrLost ? 'over reset' : 'over'}
             onClick={() => {
               resetHandler();
             }}

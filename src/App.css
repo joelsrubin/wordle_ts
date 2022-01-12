@@ -310,13 +310,9 @@ button.reset.over {
     width: 50%;
   }
 
-  .item {
-    /* max-height: 10px;
-    max-width: 10px; */
-  }
   .long-key {
     margin: 0 1px;
-    min-width: 50px;
+    min-width: 60px;
     min-height: 30px;
     font-size: 12px;
   }
