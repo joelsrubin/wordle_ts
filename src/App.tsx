@@ -363,7 +363,7 @@ function App() {
               resetHandler();
             }}
           >
-            start over
+            new game
           </button>
         </div>
         <GameBoard />
@@ -375,6 +375,14 @@ function App() {
           row={row}
         />
         <footer>
+          <div>
+            <h5>
+              &copy;{' '}
+              <a href='https://www.joelrubin.dev' target='_blank'>
+                Joel Rubin 2022
+              </a>
+            </h5>
+          </div>
           <div>
             <h5>
               Inspired by the original:{' '}

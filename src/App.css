@@ -43,9 +43,11 @@ a {
   color: white;
 }
 
-.footer {
+footer {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+  width: 100%;
 }
 
 .App-link {
