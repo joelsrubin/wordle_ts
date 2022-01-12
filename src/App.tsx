@@ -5,9 +5,11 @@ import './App.css';
 import GameBoard from './GameBoard';
 import KeyPad from './KeyPad';
 import Results from './Results';
-import { words } from './words';
+import { words, dictionary } from './words';
 import useWindowSize from 'react-use/lib/useWindowSize';
+import { FiSettings } from 'react-icons/Fi';
 import Confetti from 'react-confetti';
+import Settings from './Settings';
 
 function returnWord() {
   const idx = Math.floor(Math.random() * words.length);
@@ -54,6 +56,8 @@ function App() {
   const [rowInfo, setRowInfo] = useState<RowState>(initialRowState);
   const [lost, setLost] = useState(false);
   const [won, setWon] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [hardMode, setHardMode] = useState(false);
   const { rowLevel, row } = rowInfo;
 
   const curRow = document.querySelector(`.game-row${rowLevel}`);
@@ -67,7 +71,7 @@ function App() {
 
   const rowHandler = (key: string) => {
     // TODO: Fix Keybindings
-    console.log(key);
+
     if (key === 'Enter') {
       console.log('here');
       return submitHandler();
@@ -81,6 +85,10 @@ function App() {
 
     curRow?.classList.remove('incorrect');
     const btn = document.querySelector(`#${key}`);
+    if (hardMode && btn?.classList.contains('grey')) {
+      toast.error("You can't use that letter in hard mode!");
+      return;
+    }
     if (btn) {
       if (row.length === 5 || won || lost) {
         return;
@@ -215,7 +223,11 @@ function App() {
       return;
     }
     // if the word isn't listed return an error
-    if (row.length && !words.includes(row.join(''))) {
+    if (
+      row.length &&
+      !dictionary.includes(row.join('')) &&
+      !words.includes(row.join(''))
+    ) {
       toast.error('Unlisted Word!', { duration: 2000 });
       curRow?.classList.add('incorrect');
       return;
@@ -256,13 +268,13 @@ function App() {
   };
 
   // TODO: add key handling
-  const keyHandler = (e: any) => {
-    const abc = 'abcdefghijklmnopqrstuvwxyz';
-    if (abc.indexOf(e.key) > -1) {
-      console.log(e.key);
-      rowHandler(e.key);
-    }
-  };
+  // const keyHandler = (e: any) => {
+  //   const abc = 'abcdefghijklmnopqrstuvwxyz';
+  //   if (abc.indexOf(e.key) > -1) {
+  //     console.log(e.key);
+  //     rowHandler(e.key);
+  //   }
+  // };
 
   // set Lost to true if we didn't get the answer within 5 guesses
   useEffect(() => {
@@ -278,9 +290,14 @@ function App() {
     setWordObject(wordHandler(word));
   }, [lost, won]);
 
-  useEffect(() => {
-    document.addEventListener('keypress', keyHandler);
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener('keypress', keyHandler);
+  // }, []);
+
+  const handleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
   const winOrLost = won || lost;
   return (
     <>
@@ -302,6 +319,17 @@ function App() {
             give up?
           </button>
           <h3>WORDLER</h3>
+          {/* <FiSettings
+            style={{
+              alignSelf: 'center',
+              marginLeft: '10px',
+              cursor: 'pointer',
+            }}
+            onClick={handleSettings}
+          /> */}
+          {/* {showSettings && (
+            <Settings setHardMode={setHardMode} hardMode={hardMode} />
+          )} */}
           <button
             className={winOrLost ? 'over reset' : 'over'}
             onClick={() => {

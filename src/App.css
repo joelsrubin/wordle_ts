@@ -289,6 +289,26 @@ button.reset.over {
   z-index: 0;
 } */
 
+.overlay {
+  display: flex;
+  background-color: rgba(6, 5, 5, 0.88);
+  padding: 50px;
+  margin-top: 100px;
+  position: absolute;
+  flex-direction: column;
+  border-radius: 5px;
+  /* place-content: center center; */
+  /* align-content: center center; */
+  z-index: 0;
+}
+.custom_toast {
+  background: white;
+  color: black;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
 @media only screen and (max-width: 900px) {
   .key {
     min-width: 35px;
