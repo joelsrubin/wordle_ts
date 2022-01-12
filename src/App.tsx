@@ -1,12 +1,13 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { isMobile } from 'react-device-detect';
 import './App.css';
-import FinalGraph from './FinalGraph';
 import GameBoard from './GameBoard';
 import KeyPad from './KeyPad';
 import Results from './Results';
 import { words } from './words';
+import useWindowSize from 'react-use/lib/useWindowSize';
+import Confetti from 'react-confetti';
 
 function returnWord() {
   const idx = Math.floor(Math.random() * words.length);
@@ -15,65 +16,15 @@ function returnWord() {
 }
 
 const initialState: GameBoardState = {
-  row0: [],
-  row1: [],
-  row2: [],
-  row3: [],
-  row4: [],
-  row5: [],
-  won: false,
   word: returnWord(),
 };
 
 const reducer = (state: GameBoardState, action: any) => {
   switch (action.type) {
-    case 'row0':
-      return {
-        ...state,
-        row0: action.payload,
-        // @ts-ignore
-        won: action.payload.every((word) => word === 'green'),
-      };
-    case 'row1':
-      return {
-        ...state,
-        row1: action.payload,
-        // @ts-ignore
-        won: action.payload.every((word) => word === 'green'),
-      };
-    case 'row2':
-      return {
-        ...state,
-        row2: action.payload,
-        // @ts-ignore
-        won: action.payload.every((word) => word === 'green'),
-      };
-    case 'row3':
-      return {
-        ...state,
-        row3: action.payload,
-        // @ts-ignore
-        won: action.payload.every((word) => word === 'green'),
-      };
-    case 'row4':
-      return {
-        ...state,
-        row4: action.payload,
-        // @ts-ignore
-        won: action.payload.every((word) => word === 'green'),
-      };
-    case 'row5':
-      return {
-        ...state,
-        row5: action.payload,
-        // @ts-ignore
-        won: action.payload.every((word) => word === 'green'),
-      };
     case 'reset':
       return {
         ...initialState,
         word: returnWord(),
-        won: false,
       };
     default:
       return {
@@ -95,15 +46,16 @@ const wordHandler = (w: string) => {
 };
 
 function App() {
+  const { width, height } = useWindowSize();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { won, word } = state;
+  const { word } = state;
   const initialWordObj = wordHandler(word);
-
   const [rowInfo, setRowInfo] = useState<RowState>(initialRowState);
   const [wordObject, setWordObject] = useState<WordObject>(initialWordObj);
-
   const [lose, setLose] = useState(false);
+  const [won, setWon] = useState(false);
   const { rowLevel, row } = rowInfo;
+
   const curRow = document.querySelector(`.game-row${rowLevel}`);
 
   const getInput = (idx: number, grid: string = '.gameboard') => {
@@ -199,13 +151,12 @@ function App() {
    */
   const resetHandler = () => {
     toast.dismiss('streak');
-    const { row0 } = state;
-
+    setWon(false);
     // if we haven't given up & we haven't attempted one row -> abort
-    if (!row0.length && !lose) {
-      return;
-    }
-    dispatch({ type: 'reset', payload: ['green'] });
+    // if (!row.length && !lose) {
+    //   return;
+    // }
+    dispatch({ type: 'reset' });
     setRowInfo(initialRowState);
     const tiles = document.querySelectorAll('.item');
     const keys = document.querySelector('.keypad')?.querySelectorAll('button');
@@ -273,8 +224,6 @@ function App() {
       return;
     }
 
-    // create the return array to dispatch to the reducer
-    const result: ReturnType<ValidateKey>[] = [];
     row.forEach((letter, index) => {
       const style = validateKeyColor(word, letter, index);
       const input = getInput(index);
@@ -301,11 +250,12 @@ function App() {
           button.classList.add(style);
         }
         // inputFinal.classList.add(style);
-        result.push(style);
       }
     });
+    if (row.join('') === word) {
+      setWon(true);
+    }
 
-    dispatch({ type: `row${rowLevel}`, payload: result });
     setRowInfo({ row: [], rowLevel: rowLevel + 1 });
   };
 
@@ -345,7 +295,12 @@ function App() {
   return (
     <>
       <header className='App-header'>
-        {winOrLose && <Results won={won} lose={lose} word={word} />}
+        {winOrLose && (
+          <>
+            {won && <Confetti width={width} height={height} recycle={false} />}
+            <Results won={won} lose={lose} word={word} />
+          </>
+        )}
         <div className='header-text'>
           <button
             className='over'
