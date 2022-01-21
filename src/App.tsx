@@ -168,6 +168,7 @@ function App() {
     keys?.forEach((key) => {
       key.classList.remove('grey');
       key.classList.remove('green');
+      key.classList.remove('yellow');
     });
     tiles.forEach((node) => {
       node.innerHTML = '';
@@ -247,6 +248,7 @@ function App() {
           (!letterValidate(letter) && style === 'grey')
         ) {
           input.classList.add(style);
+
           // check if it's invalid but style is yellow -> set style to grey as we no longer have any letters left in the count so we've already assigned all yellows available
         } else if (!letterValidate(letter) && style === 'yellow') {
           input.classList.add('grey');
@@ -255,7 +257,14 @@ function App() {
           input.classList.add('green');
         }
 
-        if ((style === 'green' && button) || (style === 'grey' && button)) {
+        if (
+          (style === 'green' && button) ||
+          (style === 'grey' && button) ||
+          (style === 'yellow' && button)
+        ) {
+          if (button.classList.contains('yellow')) {
+            button.classList.remove('yellow');
+          }
           button.classList.add(style);
         }
       }

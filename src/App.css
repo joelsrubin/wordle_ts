@@ -240,6 +240,9 @@ button.key.grey {
 button.key.green {
   background: var(--darkendGreen);
 }
+button.key.yellow {
+  background: var(--darkendYellow);
+}
 
 .header-text {
   display: flex;
