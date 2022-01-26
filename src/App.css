@@ -155,8 +155,8 @@ button {
   border-radius: 5px;
   outline: none;
   border: none;
-  height: 3.5rem;
-  width: 3.5rem;
+  height: 3rem;
+  width: 3rem;
   color: var(--black);
   text-align: center;
   font-family: inherit;
@@ -197,7 +197,7 @@ button {
 .keypad {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .row {
@@ -207,10 +207,10 @@ button {
 }
 
 .key {
-  min-width: 50px;
+  width: 40px;
   margin: 0 5px;
   text-transform: uppercase;
-  height: 70px;
+  height: 60px;
 }
 
 .long-key {
@@ -315,8 +315,8 @@ button.reset.over {
   }
 
   .item {
-    height: 3rem;
-    width: 3rem;
+    height: 4rem;
+    width: 4rem;
   }
   .gameboard {
     padding: 10px 0px;
