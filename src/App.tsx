@@ -121,10 +121,8 @@ function App() {
     }
     if (word[idx] === row[idx]) {
       return 'green';
-    } else if (word[idx] !== row[idx] && word.indexOf(letter) > -1) {
-      return 'yellow';
     } else {
-      return '';
+      return 'yellow';
     }
   };
 
@@ -262,9 +260,13 @@ function App() {
           (style === 'grey' && button) ||
           (style === 'yellow' && button)
         ) {
-          if (button.classList.contains('yellow')) {
+          if (style === 'green') {
             button.classList.remove('yellow');
           }
+          if (style === 'yellow') {
+            button.classList.remove('green');
+          }
+
           button.classList.add(style);
         }
       }
