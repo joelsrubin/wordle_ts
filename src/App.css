@@ -26,19 +26,13 @@ a {
   text-decoration: underline;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
-  /* min-height: 100vh; */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -161,8 +155,8 @@ button {
   border-radius: 5px;
   outline: none;
   border: none;
-  min-height: 4rem;
-  min-width: 4rem;
+  height: 3.5rem;
+  width: 3.5rem;
   color: var(--black);
   text-align: center;
   font-family: inherit;
@@ -318,6 +312,11 @@ button.reset.over {
     margin: 0 1px;
     text-transform: uppercase;
     min-height: 20px;
+  }
+
+  .item {
+    height: 3rem;
+    width: 3rem;
   }
   .gameboard {
     padding: 10px 0px;

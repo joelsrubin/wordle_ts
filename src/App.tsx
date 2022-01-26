@@ -309,26 +309,25 @@ function App() {
 
   const winOrLost = won || lost;
   return (
-    <>
-      <header className='App-header'>
-        {winOrLost && (
-          <>
-            {won && <Confetti width={width} height={height} recycle={false} />}
-            <Results won={won} lost={lost} word={word} />
-          </>
-        )}
-        <div className='header-text'>
-          <button
-            className='over'
-            onClick={() => {
-              setLost(true);
-            }}
-            disabled={winOrLost}
-          >
-            give up?
-          </button>
-          <h3>WORDLER</h3>
-          {/* <FiSettings
+    <header className='App-header'>
+      {winOrLost && (
+        <>
+          {won && <Confetti width={width} height={height} recycle={false} />}
+          <Results won={won} lost={lost} word={word} />
+        </>
+      )}
+      <div className='header-text'>
+        <button
+          className='over'
+          onClick={() => {
+            setLost(true);
+          }}
+          disabled={winOrLost}
+        >
+          give up?
+        </button>
+        <h3>WORDLER</h3>
+        {/* <FiSettings
             style={{
               alignSelf: 'center',
               marginLeft: '10px',
@@ -336,45 +335,44 @@ function App() {
             }}
             onClick={handleSettings}
           /> */}
-          {/* {showSettings && (
+        {/* {showSettings && (
             <Settings setHardMode={setHardMode} hardMode={hardMode} />
           )} */}
-          <button
-            className={winOrLost ? 'over reset' : 'over'}
-            onClick={() => {
-              resetHandler();
-            }}
-          >
-            new game
-          </button>
+        <button
+          className={winOrLost ? 'over reset' : 'over'}
+          onClick={() => {
+            resetHandler();
+          }}
+        >
+          new game
+        </button>
+      </div>
+      <GameBoard />
+      <KeyPad
+        rowHandler={rowHandler}
+        submitHandler={submitHandler}
+        rowLevel={rowLevel}
+        deleteHandler={deleteHandler}
+        row={row}
+      />
+      <footer>
+        <div>
+          <h5>
+            &copy;{' '}
+            <a href='https://www.joelrubin.dev' target='_blank'>
+              Joel Rubin 2022
+            </a>
+          </h5>
         </div>
-        <GameBoard />
-        <KeyPad
-          rowHandler={rowHandler}
-          submitHandler={submitHandler}
-          rowLevel={rowLevel}
-          deleteHandler={deleteHandler}
-          row={row}
-        />
-        <footer>
-          <div>
-            <h5>
-              &copy;{' '}
-              <a href='https://www.joelrubin.dev' target='_blank'>
-                Joel Rubin 2022
-              </a>
-            </h5>
-          </div>
-          <div>
-            <h5>
-              Inspired by the original:{' '}
-              <a href='https://www.powerlanguage.co.uk/wordle/' target='_blank'>
-                Wordle
-              </a>
-            </h5>
-          </div>
-        </footer>
-      </header>
+        <div>
+          <h5>
+            Inspired by the original:{' '}
+            <a href='https://www.powerlanguage.co.uk/wordle/' target='_blank'>
+              Wordle
+            </a>
+          </h5>
+        </div>
+      </footer>
       <Toaster
         containerStyle={
           isMobile
@@ -386,7 +384,7 @@ function App() {
               }
         }
       />
-    </>
+    </header>
   );
 }
 
