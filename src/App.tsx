@@ -153,6 +153,8 @@ function App() {
    * @returns
    */
   const resetHandler = () => {
+    const wonRow = document.querySelector('.won');
+    wonRow?.classList.remove('won');
     toast.dismiss('streak');
     setWon(false);
     // if we haven't given up & we haven't attempted one row -> abort
@@ -272,6 +274,7 @@ function App() {
       }
     });
     if (row.join('') === word) {
+      curRow?.classList.add('won');
       setWon(true);
     }
 
