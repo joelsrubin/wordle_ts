@@ -281,6 +281,9 @@ function App() {
   };
 
   const keyHandler = (e: KeyboardEvent) => {
+    // Ignore if Command (Meta) key is pressed
+    if (e.metaKey) return;
+
     const key = e.key.toLowerCase();
     const abc = 'abcdefghijklmnopqrstuvwxyz';
 

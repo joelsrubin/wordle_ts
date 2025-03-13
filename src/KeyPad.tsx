@@ -1,4 +1,4 @@
-import { FiDelete } from 'react-icons/Fi';
+import { FiDelete } from 'react-icons/fi';
 
 const keys = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -15,7 +15,7 @@ const KeyPad: React.FC<KeyPadProps> = ({
   row,
 }) => {
   return (
-    <div className='keypad'>
+    <div className="keypad">
       {keys.map((rows, i) => (
         <div key={i} className={`row row${i}`}>
           {rows.map((key, i) => (
