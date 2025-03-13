@@ -370,7 +370,7 @@ function App() {
           <h5>
             &copy;{' '}
             <a href="https://www.joelrubin.dev" target="_blank">
-              Joel Rubin 2022
+              Joel Rubin {new Date().getFullYear()}
             </a>
           </h5>
         </div>
