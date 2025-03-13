@@ -281,14 +281,23 @@ function App() {
     setRowInfo({ row: [], rowLevel: rowLevel + 1 });
   };
 
-  // TODO: add key handling
-  // const keyHandler = (e: any) => {
-  //   const abc = 'abcdefghijklmnopqrstuvwxyz';
-  //   if (abc.indexOf(e.key) > -1) {
-  //     console.log(e.key);
-  //     rowHandler(e.key);
-  //   }
-  // };
+  const keyHandler = (e: KeyboardEvent) => {
+    const key = e.key.toLowerCase();
+    const abc = 'abcdefghijklmnopqrstuvwxyz';
+
+    if (abc.includes(key)) {
+      rowHandler(key);
+    } else if (key === 'enter') {
+      submitHandler();
+    } else if (key === 'backspace' || key === 'delete') {
+      deleteHandler(row.length);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyHandler);
+    return () => document.removeEventListener('keydown', keyHandler);
+  }, [row]);
 
   // set Lost to true if we didn't get the answer within 5 guesses
   useEffect(() => {
@@ -304,26 +313,22 @@ function App() {
     setWordObject(wordHandler(word));
   }, [lost, won]);
 
-  // useEffect(() => {
-  //   document.addEventListener('keypress', keyHandler);
-  // }, []);
-
   const handleSettings = () => {
     setShowSettings(!showSettings);
   };
 
   const winOrLost = won || lost;
   return (
-    <header className='App-header'>
+    <header className="App-header">
       {winOrLost && (
         <>
           {won && <Confetti width={width} height={height} recycle={false} />}
           <Results won={won} lost={lost} word={word} />
         </>
       )}
-      <div className='header-text'>
+      <div className="header-text">
         <button
-          className='over'
+          className="over"
           onClick={() => {
             setLost(true);
           }}
@@ -364,7 +369,7 @@ function App() {
         <div>
           <h5>
             &copy;{' '}
-            <a href='https://www.joelrubin.dev' target='_blank'>
+            <a href="https://www.joelrubin.dev" target="_blank">
               Joel Rubin 2022
             </a>
           </h5>
@@ -372,7 +377,7 @@ function App() {
         <div>
           <h5>
             Inspired by the original:{' '}
-            <a href='https://www.powerlanguage.co.uk/wordle/' target='_blank'>
+            <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank">
               Wordle
             </a>
           </h5>

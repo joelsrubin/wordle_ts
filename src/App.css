@@ -203,7 +203,7 @@ button {
 .row {
   padding: 5px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .key {
@@ -329,7 +329,7 @@ button.reset.over {
   }
 
   .keypad {
-    width: 50%;
+    width: 90%;
   }
 
   .long-key {
