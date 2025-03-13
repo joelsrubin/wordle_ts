@@ -7,9 +7,8 @@ import KeyPad from './KeyPad';
 import Results from './Results';
 import { words, dictionary } from './words';
 import useWindowSize from 'react-use/lib/useWindowSize';
-import { FiSettings } from 'react-icons/Fi';
+
 import Confetti from 'react-confetti';
-import Settings from './Settings';
 
 function returnWord() {
   const idx = Math.floor(Math.random() * words.length);
